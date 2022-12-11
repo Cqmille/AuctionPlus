@@ -6,6 +6,9 @@ import jakarta.persistence.PersistenceUnit;
 
 import fr.auctionplus.app.bo.Auction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AuctionDAO {
     // The single instance of the AuctionDAO class
     private static volatile AuctionDAO instance = null;
@@ -49,6 +52,16 @@ public class AuctionDAO {
 
         // Close the EntityManager
         em.close();
+    }
+
+    public List<Auction> findAll() {
+        EntityManager em = emf.createEntityManager();
+
+        List<Auction> auctions = new ArrayList<Auction>();
+        auctions = em.createQuery("SELECT a FROM Auction a").getResultList();
+
+        em.close();
+        return auctions;
     }
 
 }

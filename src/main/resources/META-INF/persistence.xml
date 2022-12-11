@@ -7,5 +7,11 @@
     <persistence-unit name="default">
         <class>fr.auctionplus.app.bo.Auction</class>
         <class>fr.auctionplus.app.bo.User</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:sqlserver://localhost:1433;database=BDD_AUCTIONS"/>
+            <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <property name="hibernate.connection.username" value="user"/>
+            <property name="hibernate.connection.password" value="1234"/>
+        </properties>
     </persistence-unit>
 </persistence>

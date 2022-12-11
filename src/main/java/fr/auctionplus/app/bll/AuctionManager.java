@@ -1,13 +1,14 @@
 package fr.auctionplus.app.bll;
 
 import fr.auctionplus.app.dal.AuctionDAO;
+import fr.auctionplus.app.bo.Auction;
+
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import fr.auctionplus.app.bo.Auction;
-
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -61,6 +62,10 @@ public class AuctionManager {
 
     public void save(Auction auction) {
         auctionDAO.save(auction);
+    }
+
+    public List<Auction> findAll() {
+        return auctionDAO.findAll();
     }
 
 }
