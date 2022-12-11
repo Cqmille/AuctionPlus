@@ -14,20 +14,16 @@ public class AuctionsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // Retrieve the list of auctions from the database using the AuctionManager
-            List<Auction> auctions = AuctionManager.getInstance().findAll();
-
-            // Set the list of auctions as a request attribute
+            List<Auction> auctions = AuctionManager.getInstance().findLast(3);
             request.setAttribute("auctions", auctions);
-
-            // Forward the request to the auctions.jsp page
             request.getRequestDispatcher("auctions.jsp").forward(request, response);
         } catch (IOException e) {
-            // If an error occurs, print the stack trace to the console and send a 500 Internal Server Error response to the client
-            //e.printStackTrace();
-            //response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            }
+            ServletContext context = getServletContext();
+            context.log("Une erreur s'est produite lors de la récupération de la liste des enchères", e);
+            String errorMessage = "Une erreur s'est produite lors de la récupération de la liste des enchères: " + e.getMessage();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessage);
         }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

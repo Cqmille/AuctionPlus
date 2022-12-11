@@ -6,7 +6,6 @@ import jakarta.persistence.PersistenceUnit;
 
 import fr.auctionplus.app.bo.Auction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AuctionDAO {
@@ -57,8 +56,56 @@ public class AuctionDAO {
     public List<Auction> findAll() {
         EntityManager em = emf.createEntityManager();
 
-        List<Auction> auctions = new ArrayList<Auction>();
+        List<Auction> auctions;
         auctions = em.createQuery("SELECT a FROM Auction a").getResultList();
+
+        em.close();
+        return auctions;
+    }
+
+    public List<Auction> findLast(int n) {
+        EntityManager em = emf.createEntityManager();
+
+        List<Auction> auctions;
+        auctions = em.createQuery("SELECT a FROM Auction a ORDER BY a.auctionId DESC")
+                .setMaxResults(n)
+                .getResultList();
+
+        em.close();
+        return auctions;
+    }
+
+    public void updateAuction(Auction auction) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Auction managedAuction = em.find(Auction.class, auction.getAuctionId());
+        managedAuction.setItemName(auction.getItemName());
+        managedAuction.setItemDescription(auction.getItemDescription());
+
+        em.persist(managedAuction);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void deleteAuction(Auction auction) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Auction managedAuction = em.find(Auction.class, auction.getAuctionId());
+
+        em.remove(managedAuction);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public List<Auction> findBySellerId(int userId) {
+        EntityManager em = emf.createEntityManager();
+
+        List<Auction> auctions;
+        auctions = em.createQuery("SELECT a FROM Auction a WHERE a.sellerId = :sellerId")
+                .setParameter("sellerId", userId)
+                .getResultList();
 
         em.close();
         return auctions;

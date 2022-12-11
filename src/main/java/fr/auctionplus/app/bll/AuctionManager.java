@@ -68,4 +68,25 @@ public class AuctionManager {
         return auctionDAO.findAll();
     }
 
+    public List<Auction> findLast(int n) {
+        return auctionDAO.findLast(n);
+    }
+
+    public void updateAuction(Auction auction) {
+        auctionDAO.updateAuction(auction);
+    }
+
+    public void deleteAuction(Auction auction) {
+
+        // Vérifie s'il existe un acheteur
+        if (auction.getBuyerId() != null) {
+            return;
+        }
+
+        auctionDAO.deleteAuction(auction);
+    }
+
+    public List<Auction> findBySellerId(int userId) {
+        return auctionDAO.findBySellerId(userId);
+    }
 }

@@ -80,16 +80,6 @@ public class User {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = userId;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (isAdmin ? 1 : 0);
-        return result;
-    }
-
     public static String hashPwd(String motDePasse)
     {
         MessageDigest md;

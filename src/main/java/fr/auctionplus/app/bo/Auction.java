@@ -144,21 +144,6 @@ public class Auction {
     }
 
     @Override
-    public int hashCode() {
-        int result = auctionId;
-        result = 31 * result + (itemName != null ? itemName.hashCode() : 0);
-        result = 31 * result + (itemDescription != null ? itemDescription.hashCode() : 0);
-        result = 31 * result + (startingBid != null ? startingBid.hashCode() : 0);
-        result = 31 * result + (currentBid != null ? currentBid.hashCode() : 0);
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + sellerId;
-        result = 31 * result + (buyerId != null ? buyerId.hashCode() : 0);
-        result = 31 * result + (isClosed ? 1 : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Auction{" +
                 "auctionId=" + auctionId +
