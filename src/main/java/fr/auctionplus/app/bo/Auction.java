@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "auctions", schema = "dbo", catalog = "BDD_AUCTIONS")
@@ -30,12 +31,12 @@ public class Auction {
     @Basic
     @Column(name = "end_time")
     private Date endTime;
-    @Basic
-    @Column(name = "seller_id")
-    private int sellerId;
-    @Basic
-    @Column(name = "buyer_id")
-    private Integer buyerId;
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User sellerId;
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private User buyerId;
     @Basic
     @Column(name = "is_closed", columnDefinition = "BIT DEFAULT 0")
     private boolean isClosed;
@@ -96,19 +97,19 @@ public class Auction {
         this.endTime = endTime;
     }
 
-    public int getSellerId() {
-        return sellerId;
+    public User getSellerId() {
+        return this.sellerId;
     }
 
-    public void setSellerId(int sellerId) {
+    public void setSellerId(User sellerId) {
         this.sellerId = sellerId;
     }
 
-    public Integer getBuyerId() {
-        return buyerId;
+    public User getBuyerId() {
+        return this.sellerId;
     }
 
-    public void setBuyerId(Integer buyerId) {
+    public void setBuyerId(User buyerId) {
         this.buyerId = buyerId;
     }
 
@@ -130,15 +131,15 @@ public class Auction {
         if (auctionId != auctions.auctionId) return false;
         if (sellerId != auctions.sellerId) return false;
         if (isClosed != auctions.isClosed) return false;
-        if (itemName != null ? !itemName.equals(auctions.itemName) : auctions.itemName != null) return false;
-        if (itemDescription != null ? !itemDescription.equals(auctions.itemDescription) : auctions.itemDescription != null)
+        if (!Objects.equals(itemName, auctions.itemName)) return false;
+        if (!Objects.equals(itemDescription, auctions.itemDescription))
             return false;
-        if (startingBid != null ? !startingBid.equals(auctions.startingBid) : auctions.startingBid != null)
+        if (!Objects.equals(startingBid, auctions.startingBid))
             return false;
-        if (currentBid != null ? !currentBid.equals(auctions.currentBid) : auctions.currentBid != null) return false;
-        if (startTime != null ? !startTime.equals(auctions.startTime) : auctions.startTime != null) return false;
-        if (endTime != null ? !endTime.equals(auctions.endTime) : auctions.endTime != null) return false;
-        if (buyerId != null ? !buyerId.equals(auctions.buyerId) : auctions.buyerId != null) return false;
+        if (!Objects.equals(currentBid, auctions.currentBid)) return false;
+        if (!Objects.equals(startTime, auctions.startTime)) return false;
+        if (!Objects.equals(endTime, auctions.endTime)) return false;
+        if (!Objects.equals(buyerId, auctions.buyerId)) return false;
 
         return true;
     }

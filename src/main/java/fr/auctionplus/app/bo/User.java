@@ -3,6 +3,7 @@ package fr.auctionplus.app.bo;
 import jakarta.persistence.*;
 
 import java.security.MessageDigest;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "dbo", catalog = "BDD_AUCTIONS")
@@ -73,9 +74,9 @@ public class User {
 
         if (userId != user.userId) return false;
         if (isAdmin != user.isAdmin) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (!Objects.equals(username, user.username)) return false;
+        if (!Objects.equals(password, user.password)) return false;
+        if (!Objects.equals(email, user.email)) return false;
 
         return true;
     }
